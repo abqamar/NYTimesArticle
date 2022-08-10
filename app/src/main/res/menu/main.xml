@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_one_day"
+            android:orderInCategory="100"
+            android:title="@string/one_day"
+            android:checked="true"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/action_seven_days"
+            android:orderInCategory="100"
+            android:title="@string/seven_days"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/action_thirty_days"
+            android:orderInCategory="100"
+            android:title="@string/thirty_days"
+            app:showAsAction="never" />
+    </group>
+</menu>
