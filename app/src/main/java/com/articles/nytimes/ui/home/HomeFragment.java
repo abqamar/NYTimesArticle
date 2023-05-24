@@ -1,5 +1,6 @@
 package com.articles.nytimes.ui.home;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,6 +37,13 @@ public class HomeFragment extends Fragment implements OnArticleClickListener {
     private FragmentHomeBinding mBinding;
     private HomeViewModel homeViewModel;
     private View homeView;
+    private Context mContext;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,11 +75,11 @@ public class HomeFragment extends Fragment implements OnArticleClickListener {
 
     private void getArticles(String days) {
         if(!AppUtils.hasConnection(getContext())){
-            AppUtils.showSnackBar(mBinding.getRoot(), getContext(), getResources().getString(R.string.no_internet));
+            AppUtils.showSnackBar(mBinding.getRoot(), mContext, getResources().getString(R.string.no_internet));
             wait(false);
             return;
         }
-        homeViewModel.getArticlesLiveData(days).observeForever(articles -> {
+        homeViewModel.getArticlesLiveData(days).observe(getViewLifecycleOwner(), articles -> {
             if (articles != null) {
                 wait(false);
                 setDataIntoAdapter(articles.getResults());
@@ -98,7 +106,6 @@ public class HomeFragment extends Fragment implements OnArticleClickListener {
         }else{
             menu.findItem(R.id.action_thirty_days).setChecked(true);
         }
-
     }
 
     @Override
@@ -117,7 +124,6 @@ public class HomeFragment extends Fragment implements OnArticleClickListener {
             wait(true);
             getArticles("30");
         }
-
         return super.onOptionsItemSelected(item);
     }
 
